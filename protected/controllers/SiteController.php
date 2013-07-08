@@ -5,6 +5,7 @@ class SiteController extends Controller
 	/**
 	 * Declares class-based actions.
 	 */
+
 	public function actions()
 	{
 		return array(
@@ -25,7 +26,7 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
-	public function actionMain()
+	public function actionPageTab()
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
@@ -33,6 +34,11 @@ class SiteController extends Controller
 	}
 	
 	public function actionUpload() {
+		$img_path = Yii::app()->request->baseUrl . "/images/";
+		$cmd = "convert " . $img_path . "koala.gif " . $img_path . "blur_map_polar.jpg  -compose blur -define compose:args=10x0+0+180 -composite " . $img_path . "blur_weird.jpg";
+		echo $cmd;
+		$res = exec($cmd);
+		echo $res;
 		$auth = new Authentication();
 		//$page_liked = $auth->pageLiked();
 		$status = $auth->authenticate();
@@ -45,12 +51,12 @@ class SiteController extends Controller
 			$this->render('upload');
 		}else{
 			//echo $status['loggedIn'];
-			$this->render('upload');
+			//$this->render('upload');
 			//$this->renderPartial('auth',array('url'=>$status['loginUrl']));
 		}
 	}
 
-	public function actionIndex() {
+	public function actionCanvasUrl() {
 		$this->render('index');
 	}
 	
@@ -164,5 +170,20 @@ class SiteController extends Controller
 	{
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
+	}
+	
+	public function actionGallery() {
+		$criteria = new CDbCriteria;
+		$criteria->order = "create_time desc";
+		$app_entries = AppEntry::model()->findAll($criteria);
+		$this->render('gallery',  array('app_entries' => $app_entries));
+	}
+	
+	public function actionLeaderboard() {
+		$criteria = new CDbCriteria;
+		$criteria->order = "points desc";
+		$criteria->limit = 3;
+		$lb_data = AppEntry::model()->findAll($criteria);
+		$this->render('leaderboard', array('lb_data' => $lb_data));
 	}
 }
