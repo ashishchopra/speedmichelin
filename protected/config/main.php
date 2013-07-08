@@ -55,10 +55,10 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=speedface',
+			'connectionString' => 'mysql:host=lmwservice.cxbg6xquhsgw.ap-southeast-1.rds.amazonaws.com;dbname=getsetclick',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => 'LMWadmin12345',
+			'username' => 'lmwdbservice',
+			'password' => 'LMWdbservice',
 			'charset' => 'utf8',
 		),
 		
@@ -96,7 +96,7 @@ return array(
 		),
 		'FB_params'=>array(
 			'scope'=>'email', 
-			'redirect_uri' => 'http://apps.facebook.com/speedmichelin',
+			'redirect_uri' => 'http://apps14.likemyworld.com/speedmichelin/index.php/site/canvasUrl',
 			//'display'=>'popup'
 		),
 	),
