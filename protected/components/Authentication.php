@@ -10,8 +10,10 @@
 
         public function authenticate() {
             $uid = $this->facebook -> getUser();
+			echo $uid;
 			$me = FALSE;
             $access_token = $this->facebook->getAccessToken();
+			echo $access_token;
             if ($uid) {
                 try {
                     $me = $this->facebook -> api('/me?access_token='.$access_token);

@@ -30,15 +30,6 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('main');
-	}
-	
-	public function actionUpload() {
-		$img_path = Yii::app()->request->baseUrl . "/images/";
-		$cmd = "convert " . $img_path . "koala.gif " . $img_path . "blur_map_polar.jpg  -compose blur -define compose:args=10x0+0+180 -composite " . $img_path . "blur_weird.jpg";
-		echo $cmd;
-		$res = exec($cmd);
-		echo $res;
 		$auth = new Authentication();
 		//$page_liked = $auth->pageLiked();
 		$status = $auth->authenticate();
@@ -48,12 +39,22 @@ class SiteController extends Controller
 			//Save User Information in the table
 			$this->saveUser($status);
 			//send user to the landing page of the app
-			$this->render('upload');
+			$this->render('main');
 		}else{
-			//echo $status['loggedIn'];
+			echo "not logged in";
 			//$this->render('upload');
-			//$this->renderPartial('auth',array('url'=>$status['loginUrl']));
+			$this->renderPartial('auth',array('url'=>$status['loginUrl']));
 		}
+	}
+	
+	public function actionUpload() {
+		/*	
+		$img_path = Yii::app()->request->baseUrl . "/images/";
+		$cmd = "convert " . $img_path . "koala.gif " . $img_path . "blur_map_polar.jpg  -compose blur -define compose:args=10x0+0+180 -composite " . $img_path . "blur_weird.jpg";
+		echo $cmd;
+		$res = exec($cmd);
+		echo $res;*/
+		$this->render('upload');
 	}
 
 	public function actionCanvasUrl() {
@@ -86,7 +87,7 @@ class SiteController extends Controller
             }
             $user->uname = $status['me']['name'];
             if (isset($status['me']['email'])){
-                $user->email = $status['me']['email'];
+                $user->uemail = $status['me']['email'];
             }
             $user->create_time = time();
             if($user->save()){
@@ -185,5 +186,9 @@ class SiteController extends Controller
 		$criteria->limit = 3;
 		$lb_data = AppEntry::model()->findAll($criteria);
 		$this->render('leaderboard', array('lb_data' => $lb_data));
+	}
+
+	public function selectMorphedImages() {
+		$base_img = $_POST['img_src'];
 	}
 }
