@@ -33,6 +33,7 @@ class SiteController extends Controller
 		$auth = new Authentication();
 		//$page_liked = $auth->pageLiked();
 		$status = $auth->authenticate();
+		
 		if($status['loggedIn']){
 			//save user facebook info in cookies
 		    $this->saveCookie($status);
@@ -72,6 +73,7 @@ class SiteController extends Controller
 		Yii::app()->request->cookies['uid'] = new CHttpCookie('uid', $status['me']['id']);
 		Yii::app()->request->cookies['name'] = new CHttpCookie('name', $status['me']['name']);
 		Yii::app()->request->cookies['email'] = new CHttpCookie('email', $status['me']['email']);
+		Yii::app()->request->cookies['access_token'] = new CHttpCookie('access_token', $status['access_token']);
 	}
 
 	public function saveUser($status) {
@@ -190,5 +192,6 @@ class SiteController extends Controller
 
 	public function selectMorphedImages() {
 		$base_img = $_POST['img_src'];
+		$this->render();
 	}
 }

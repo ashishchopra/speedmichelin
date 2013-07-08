@@ -95,7 +95,7 @@ return array(
 			'fileUpload'=>TRUE			
 		),
 		'FB_params'=>array(
-			'scope'=>'email', 
+			'scope'=>'email, user_photos', 
 			'redirect_uri' => 'https://apps14.likemyworld.com/speedmichelin/index.php/site/canvasUrl/',
 			//'display'=>'popup'
 		),

@@ -27,6 +27,7 @@
                     'loggedIn'=>TRUE,
                     'logoutUrl'=>$logoutUrl,
                     'me'=>$me,
+                    'access_token' => $access_token
                 );
             } else {
                 $loginUrl = $this->facebook -> getLoginUrl(Yii::app()->params['FB_params']);
